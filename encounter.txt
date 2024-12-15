@@ -1,4 +1,4 @@
-asd|32
-Goblin Lord|21
-Goblin|2
-Knight|1
+The Dark Urge|16
+Shadow Heart|13
+Astarion|12
+Baal|10

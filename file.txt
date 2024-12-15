@@ -1,3 +1,0 @@
-Goblin|2
-Knight|1
-Goblin Lord|21
