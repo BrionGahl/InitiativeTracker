@@ -1,0 +1,4 @@
+asd|32
+Goblin Lord|21
+Goblin|2
+Knight|1
