@@ -133,7 +133,7 @@ impl InitiativeTracker {
                     self.handle_remove();
                 }
                 State::Save => {
-                    self.handle_save();
+                    let _ = self.handle_save();
                 }
                 State::Quit => {}
             }
