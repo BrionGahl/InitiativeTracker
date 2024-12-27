@@ -48,7 +48,7 @@ fn read_file_to_vector(path: &PathBuf) -> Result<Vec<InitiativeItem<String>>, Er
         let parts: Vec<String> = line?.split("|").map(|part| String::from(part)).collect();
 
         let name: String = parts.get(0).unwrap().clone();
-        let initiative: i32 = parts.get(1).unwrap().parse().unwrap();
+        let initiative: f32 = parts.get(1).unwrap().parse().unwrap();
 
         output.push(InitiativeItem::new(name, initiative));
     }

@@ -3,7 +3,7 @@ use std::fmt::Debug;
 
 pub struct InitiativeItem<T> {
     name: T,
-    initiative: i32,
+    initiative: f32,
 }
 
 impl<T> Debug for InitiativeItem<T> where T: Debug {
@@ -28,12 +28,12 @@ impl<T> PartialOrd<Self> for InitiativeItem<T> {
 
 impl<T> Ord for InitiativeItem<T> {
     fn cmp(&self, other: &Self) -> Ordering {
-        self.initiative.cmp(&other.initiative)
+        self.initiative.partial_cmp(&other.initiative).unwrap()
     }
 }
 
 impl<T> InitiativeItem<T> {
-    pub fn new(name: T, initiative: i32) -> Self {
+    pub fn new(name: T, initiative: f32) -> Self {
         InitiativeItem { name, initiative }
     }
 
@@ -41,7 +41,7 @@ impl<T> InitiativeItem<T> {
         &self.name
     }
 
-    pub fn initiative(&self) -> i32 {
+    pub fn initiative(&self) -> f32 {
         self.initiative
     }
 

@@ -14,7 +14,6 @@ enum State {
     Quit = 4,
 }
 
-
 pub struct InitiativeTracker {
     tracker: Vec<InitiativeItem<String>>,
     turn: i32,
@@ -63,7 +62,7 @@ impl InitiativeTracker {
         print!("Enter combatant initiative: ");
         io::stdout().flush().unwrap();
 
-        let initiative: i32 = match get_string_input().parse::<i32>() {
+        let initiative: f32 = match get_string_input().parse::<f32>() {
             Ok(i) => i,
             Err(e) => {
                 eprintln!("Couldn't parse initiative... {} ", e);
@@ -108,7 +107,7 @@ impl InitiativeTracker {
         self.tracker.sort_by(|a, b| b.cmp(a));
     }
 
-    fn add(&mut self, name: String, initiative: i32) {
+    fn add(&mut self, name: String, initiative: f32) {
         self.tracker.push(InitiativeItem::new(name, initiative));
         self.tracker.sort_by(|a, b| b.cmp(a));
     }
