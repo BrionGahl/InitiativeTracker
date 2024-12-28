@@ -39,7 +39,7 @@ impl InitiativeTracker {
         println!("Round: {}, Seconds: {}", self.round, (self.round - 1) * 6);
         for (i, item) in self.tracker.iter().enumerate() {
             let marker: &str = if i as i32 == self.turn {"->"} else {""};
-            println!("{}\t{}{}\t\t{}", i, marker, item.name(), item.initiative());
+            println!("{}\t{}\t\t{}", marker, item.name(), item.initiative());
         }
         display_options();
 
