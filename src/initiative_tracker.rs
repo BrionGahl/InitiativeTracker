@@ -2,7 +2,6 @@ use std::char::ParseCharError;
 use std::fs::File;
 use std::io;
 use std::io::{Error, Write};
-use clap::builder::TypedValueParser;
 use crate::initiative_item::InitiativeItem;
 
 #[derive(Copy, Clone)]
@@ -37,9 +36,11 @@ impl InitiativeTracker {
     fn handle_normal(&mut self) {
         display_header("ENCOUNTER");
         println!("Round: {}, Seconds: {}", self.round, (self.round - 1) * 6);
+
+        println!("MARKER | COMBATANT | INITIATIVE | INDEX");
         for (i, item) in self.tracker.iter().enumerate() {
             let marker: &str = if i as i32 == self.turn {"->"} else {""};
-            println!("{}\t{}\t\t{}", marker, item.name(), item.initiative());
+            println!("{}\t{}\t{}\t{}", marker, item.name(), item.initiative(), i);
         }
         display_options();
 
@@ -55,6 +56,7 @@ impl InitiativeTracker {
     }
 
     fn handle_add(&mut self) {
+        display_header("ADD");
         print!("Enter combatant name: ");
         io::stdout().flush().unwrap();
 
@@ -76,6 +78,7 @@ impl InitiativeTracker {
     }
 
     fn handle_remove(&mut self) {
+        display_header("REMOVE");
         print!("Enter index to remove: ");
         io::stdout().flush().unwrap();
         let index: usize = match get_string_input().parse::<usize>() {
@@ -102,25 +105,20 @@ impl InitiativeTracker {
         Ok(true)
     }
 
-
     fn sort(&mut self) {
         self.tracker.sort_by(|a, b| b.cmp(a));
     }
 
     fn add(&mut self, name: String, initiative: f32) {
         self.tracker.push(InitiativeItem::new(name, initiative));
-        self.tracker.sort_by(|a, b| b.cmp(a));
-    }
-
-    fn remove(&mut self, index: usize) {
-        self.tracker.remove(index);
+        self.sort();
     }
 
     pub fn run(&mut self) {
-        self.tracker.sort_by(|a, b| b.cmp(a));
+        self.sort();
 
         while self.state as i32 != State::Quit as i32 {
-            print!("{}[2J", 27 as char);
+            print!("{}[2J", 27 as char); // Clear Screen
             match self.state {
                 State::Normal => {
                     self.handle_normal();
@@ -142,7 +140,7 @@ impl InitiativeTracker {
 }
 
 fn display_header(title: &str) {
-    println!("------\t{}\t------", title);
+    println!("------{}------", title);
 }
 
 fn display_options() {
